@@ -7,6 +7,6 @@ import processing.core.PApplet;
 public interface VisualElement {
 
 	//every visual element should implements the display function for it own shape.
-	public void display(PositionInPanel pos);
+	public void display();
 
 }

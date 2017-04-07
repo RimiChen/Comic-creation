@@ -1,9 +1,9 @@
 import java.util.ArrayList;
 import java.util.List;
-
 import BasicElement.GlobalSettings;
 import BasicElement.PositionInPanel;
 import BasicElement.RGBA;
+import BasicElement.Vector2D;
 import Data.ActionPool;
 import Data.CharaState;
 import Data.State;
@@ -21,32 +21,37 @@ import processing.core.PApplet;
  * v2: Add GUI with Character class
  */
 
-
 /*
  * This is the starting point of this program.
  */
 public class MainProgram extends PApplet{
-
-	//Declare global settings
-	public static GlobalSettings G;
-	public static StructureMap S;
-	public static List<StructureNode> currentStructure;
 	
-	public static void main(String[] args) {
-
-		//initial global settings
-		initialize();			
-		
-		//Execute processing
+	//Execute processing, don't put anything else in here
+	public static void main(String[] args) {		
 		PApplet.main("MainProgram");
 	}
-	//set size	
+
+	//set size, don't put anything else in here=============================================================
 	public void settings(){
 		//window size
 		size(GlobalSettings.SCREEN_WIDTH, GlobalSettings.SCREEN_HEIGHT);
 		
+	}
+
+	//Declare global settings
+		public static GlobalSettings G;
+		public static StructureMap S;
+		public static List<StructureNode> currentStructure;
+		
+	//main setup run on first time===================================================================
+	public void setup(){
+		
 		//create the first narrative structure
 		//initialize current structure
+
+		//initial global settings
+		initialize();	
+		
 		currentStructure.clear();
 		currentStructure = createStructure();
 		
@@ -54,19 +59,24 @@ public class MainProgram extends PApplet{
 			//assign character
 			currentStructure.get(0).initializePanel();
 		}
+
 	}
-	//main draw loop
+	
+	//main draw loop===========================================================================
 	public void draw(){
 		ActionPool pool = new ActionPool();
 		CharaState initState = new CharaState();
 		RGBA color = new RGBA(255, 0, 0, 255);
 		PositionInPanel pos = new PositionInPanel(GlobalSettings.LEFT, GlobalSettings.LOW, GlobalSettings.FACE_RIGHT);
 		
-		CharacterObject c1 = new CharacterObject(this, pool, initState, color);
-		c1.display(pos);
+		CharacterObject c1 = new CharacterObject(this, pool, initState, color, pos);
+		c1.display();
+		
 	}
-	//Initialize settings
+	
+	//Initialize settings===========================================================================
 	public static void initialize(){
+		
 		//global setting
 		G = new GlobalSettings();
 		
@@ -75,13 +85,14 @@ public class MainProgram extends PApplet{
 		S.addStructure("P|R");
 		S.addStructure("I|P|R");
 		S.addStructure("I|P|L|R");
-		S.addStructure("I|E|P|R");
+		S.addStructure("E|I|P|R");
 		S.showAllStructure();
 		
 		//set current structure to null
 		currentStructure = new ArrayList<StructureNode>();
 	}
-	//create structure
+	
+	//create structure=====================================================================
 	public List<StructureNode> createStructure(){
 		
 		//create a root node for structure
@@ -106,4 +117,7 @@ public class MainProgram extends PApplet{
 		
 	}
 
+	public void panelDisplay(){
+		
+	}
 }

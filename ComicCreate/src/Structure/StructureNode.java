@@ -4,7 +4,9 @@ import java.util.List;
 import java.util.Vector;
 
 import BasicElement.GlobalSettings;
+import BasicElement.PositionInPanel;
 import BasicElement.RGBA;
+import BasicElement.Vector2D;
 import Data.ActionPool;
 import Data.CharaState;
 import VisualElement.CharacterObject;
@@ -146,10 +148,16 @@ public class StructureNode {
 		for(int i =0; i <numberOfCharacter; i++){
 			RGBA tempColor = getRandomColor();
 			CharaState initialState = new CharaState();
+			Vector2D tempPosi = new Vector2D(0, 1);
+			PositionInPanel pos = new PositionInPanel(GlobalSettings.LEFT, GlobalSettings.LOW, GlobalSettings.FACE_RIGHT);
 			
 			//PApplet p, ActionPool pool, CharaState currentState, RGBA color
-			CharacterObject tempCharacter = new CharacterObject(p, GlobalSettings.AP, initialState, tempColor);
-			
+			CharacterObject tempCharacter = new CharacterObject(p, GlobalSettings.AP, initialState, tempColor, pos);
+			p.fill(255);
+			p.rect(0,0,GlobalSettings.PANEL_WIDTH, GlobalSettings.PANEL_HEIGHT);
+			p.line(GlobalSettings.BLOCK_WIDTH, 0, GlobalSettings.BLOCK_WIDTH, GlobalSettings.PANEL_HEIGHT);
+			p.line(GlobalSettings.BLOCK_WIDTH*2, 0, GlobalSettings.BLOCK_WIDTH*2, GlobalSettings.PANEL_HEIGHT);
+			p.line(0, GlobalSettings.BLOCK_HEIGHT, GlobalSettings.PANEL_WIDTH, GlobalSettings.BLOCK_HEIGHT);
 		}
 	}
 	public RGBA getRandomColor(){

@@ -15,19 +15,20 @@ public class CharacterObject implements VisualElement{
 	PApplet p;
 	ActionPool pool;
 	RGBA color;
-	
+	PositionInPanel pos;
 	/*
 	 * data structure
 	 */
 	// the current state of this character, with position direction
 	CharaState currentState;
 	
-	public CharacterObject(PApplet p, ActionPool pool, CharaState currentState, RGBA color){
+	public CharacterObject(PApplet p, ActionPool pool, CharaState currentState, RGBA color, PositionInPanel pos){
 		this.p = p;
 		this.pool = pool;
 		//need initialize, but now empty
 		this.currentState = currentState;
 		this.color = color;
+		this.pos = pos;
 	}
 	/*
 	 * match currentState with Action's state, where the Actions are in the ActionPool
@@ -41,7 +42,16 @@ public class CharacterObject implements VisualElement{
 		return actionCategory;
 	}
 	@Override
-	public void display(PositionInPanel pos) {
+	public void display() {
+		
+		p.fill(color.r, color.g, color.b, color.a);
+		Vector2D realpos = pos.transform2Real();
+		p.translate(realpos.x, realpos.y);
+		p.ellipse(0, 0, GlobalSettings.CHARA_SIZE/2, GlobalSettings.CHARA_SIZE/2);
+
+		
+		
+		/*
 		// TODO Auto-generated method stub
 		//transform position in panel to real position, suppose it is center point
 		Vector2D currenPos = pos.transform2Real();
@@ -64,8 +74,8 @@ public class CharacterObject implements VisualElement{
 			);
 			p.popMatrix();
 		p.popMatrix();				
-	}
-
-	
+		*/
+		
+	}//end of display
 
 }
