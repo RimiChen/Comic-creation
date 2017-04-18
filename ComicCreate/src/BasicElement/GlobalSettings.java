@@ -20,8 +20,8 @@ public class GlobalSettings {
 	/*
 	 * environment settings
 	 */
-	public static final int SCREEN_WIDTH = 800;
-	public static final int SCREEN_HEIGHT = 600;
+	public static final int SCREEN_WIDTH = 700;
+	public static final int SCREEN_HEIGHT = 500;
 	
 	public static final int BLOCK_WIDTH = 50;
 	public static final int BLOCK_HEIGHT = 50;
@@ -33,7 +33,7 @@ public class GlobalSettings {
 	
 	public static final int EXPAND_FRACTION = 5;
 	
-	public static final int MAX_CHARACTER = 4;
+	public static final int MAX_CHARACTER = 3;
 	
 	//Global variables
 	public static ActionPool AP = new ActionPool();

@@ -39,9 +39,9 @@ public class MainProgram extends PApplet{
 	}
 
 	//Declare global settings
-		public static GlobalSettings G;
-		public static StructureMap S;
-		public static List<StructureNode> currentStructure;
+	public static GlobalSettings G;
+	public static StructureMap S;
+	public static List<StructureNode> currentStructure;
 		
 	//main setup run on first time===================================================================
 	public void setup(){
@@ -51,19 +51,18 @@ public class MainProgram extends PApplet{
 
 		//initial global settings
 		initialize();	
-		
-		currentStructure.clear();
-		currentStructure = createStructure();
-		
-		if(currentStructure.size()>0){
-			//assign character
-			currentStructure.get(0).initializePanel();
+		refresh();
+	}
+	
+	public void keyPressed(){
+		if (key == 'n' || key == 'N'){
+			refresh();
 		}
-
 	}
 	
 	//main draw loop===========================================================================
 	public void draw(){
+		/*
 		ActionPool pool = new ActionPool();
 		CharaState initState = new CharaState();
 		RGBA color = new RGBA(255, 0, 0, 255);
@@ -71,6 +70,8 @@ public class MainProgram extends PApplet{
 		
 		CharacterObject c1 = new CharacterObject(this, pool, initState, color, pos);
 		c1.display();
+		*/
+		
 		
 	}
 	
@@ -84,13 +85,46 @@ public class MainProgram extends PApplet{
 		S = new StructureMap();
 		S.addStructure("P|R");
 		S.addStructure("I|P|R");
-		S.addStructure("I|P|L|R");
+		S.addStructure("I|L|P|R");
 		S.addStructure("E|I|P|R");
+		S.addStructure("E|I|L|P");
+		S.addStructure("E|I|L|P|R");
+		S.addStructure("I|P|I|P|I|P|R");
 		S.showAllStructure();
-		
+	}
+	
+	public void refresh(){
 		//set current structure to null
 		currentStructure = new ArrayList<StructureNode>();
+			
+		//clean structure and canvas
+		currentStructure.clear();
+		background(204);
+		
+		currentStructure = createStructure();
+		if(currentStructure.size()>0){
+			int next = 0;
+			pushMatrix();
+			currentStructure.get(0).initializePanel();
+			currentStructure.get(0).drawPanel();
+			translate(GlobalSettings.PANEL_WIDTH+10, 0);
+			for (int i = 1; i < currentStructure.size(); i++){
+				//current line full, draw next
+				if((i / 4) > next){
+					popMatrix();
+					pushMatrix();
+					next++;
+					translate(0, (GlobalSettings.PANEL_HEIGHT+15)*next);
+				}
+				//currentStructure.get(i).initializePanel();
+				currentStructure.get(i).followUpdate(currentStructure.get(i-1));
+				currentStructure.get(i).drawPanel();
+				translate(GlobalSettings.PANEL_WIDTH+10, 0);
+			}
+			popMatrix();
+		}
 	}
+	
 	
 	//create structure=====================================================================
 	public List<StructureNode> createStructure(){
@@ -117,7 +151,4 @@ public class MainProgram extends PApplet{
 		
 	}
 
-	public void panelDisplay(){
-		
-	}
 }

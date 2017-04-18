@@ -22,8 +22,10 @@ public class StructureNode {
 	public String category;
 	public List<StructureNode> childList;
 	public boolean isWentThrough = false;
-	public int currentLevel = 0;
+	public int currentLevel = 0;//tree layer
 	public PApplet p;
+	public ArrayList<CharacterObject> characters = new ArrayList<CharacterObject>();
+	
 	
 	//character name, should be string
 	public Vector characterSet;
@@ -128,7 +130,6 @@ public class StructureNode {
 	 * print whole structure
 	 */
 	public List<StructureNode> getLeafStructure(int currentChildCount, List<StructureNode> structureList){
-		int count = 0;
 		if(childList.size() == 0){
 			//if no child -> leaf node
 			System.out.println("$: "+currentLevel+", "+category);
@@ -144,25 +145,66 @@ public class StructureNode {
 		return structureList;
 	}
 	public void initializePanel(){
+		//assign characters
 		int numberOfCharacter = (int )(Math.random() * GlobalSettings.MAX_CHARACTER + 1);
 		for(int i =0; i <numberOfCharacter; i++){
 			RGBA tempColor = getRandomColor();
 			CharaState initialState = new CharaState();
-			Vector2D tempPosi = new Vector2D(0, 1);
-			PositionInPanel pos = new PositionInPanel(GlobalSettings.LEFT, GlobalSettings.LOW, GlobalSettings.FACE_RIGHT);
-			
-			//PApplet p, ActionPool pool, CharaState currentState, RGBA color
-			CharacterObject tempCharacter = new CharacterObject(p, GlobalSettings.AP, initialState, tempColor, pos);
-			p.fill(255);
-			p.rect(0,0,GlobalSettings.PANEL_WIDTH, GlobalSettings.PANEL_HEIGHT);
-			p.line(GlobalSettings.BLOCK_WIDTH, 0, GlobalSettings.BLOCK_WIDTH, GlobalSettings.PANEL_HEIGHT);
-			p.line(GlobalSettings.BLOCK_WIDTH*2, 0, GlobalSettings.BLOCK_WIDTH*2, GlobalSettings.PANEL_HEIGHT);
-			p.line(0, GlobalSettings.BLOCK_HEIGHT, GlobalSettings.PANEL_WIDTH, GlobalSettings.BLOCK_HEIGHT);
+			//PositionInPanel pos = new PositionInPanel(GlobalSettings.LEFT, GlobalSettings.LOW, GlobalSettings.FACE_RIGHT);
+			PositionInPanel pos = new PositionInPanel( i+1, GlobalSettings.LOW, GlobalSettings.FACE_RIGHT);
+			characters.add( new CharacterObject(p, GlobalSettings.AP, initialState, tempColor, pos));
 		}
 	}
+	public void followUpdate(StructureNode privous){
+		//copy privous
+		characters = privous.characters;
+		
+		//maintain, add, sub
+		int n = (int)p.random(3);
+		switch(n){
+		case 0:
+			break;
+		case 1:
+			if (characters.size()<GlobalSettings.MAX_CHARACTER){
+				RGBA tempColor = getRandomColor();
+				CharaState initialState = new CharaState();
+				//PositionInPanel pos = new PositionInPanel(GlobalSettings.LEFT, GlobalSettings.LOW, GlobalSettings.FACE_RIGHT);
+				PositionInPanel pos = new PositionInPanel(GlobalSettings.LEFT , GlobalSettings.HIGH, GlobalSettings.FACE_RIGHT);
+				characters.add( new CharacterObject(p, GlobalSettings.AP, initialState, tempColor, pos));
+			}
+			break;
+		case 2:
+			if (characters.size() > 1){
+				characters.remove((int)p.random(characters.size()));
+			}
+			break;
+		default:
+			System.out.println("out of bound:" + n);
+		}
+	}
+	
+	
+	public void drawPanel(){
+		//draw canvas
+		p.pushMatrix();
+		p.fill(255);
+		p.rect(0,0,GlobalSettings.PANEL_WIDTH, GlobalSettings.PANEL_HEIGHT);
+		p.line(GlobalSettings.BLOCK_WIDTH, 0, GlobalSettings.BLOCK_WIDTH, GlobalSettings.PANEL_HEIGHT);
+		p.line(GlobalSettings.BLOCK_WIDTH*2, 0, GlobalSettings.BLOCK_WIDTH*2, GlobalSettings.PANEL_HEIGHT);
+		p.line(0, GlobalSettings.BLOCK_HEIGHT, GlobalSettings.PANEL_WIDTH, GlobalSettings.BLOCK_HEIGHT);
+		p.textSize(14);
+		p.text(category + ", " + characters.size(), 10, GlobalSettings.PANEL_HEIGHT+15);
+		
+		//draw characters
+		for (int i = 0; i< characters.size(); i++){
+			characters.get(i).display();
+		}
+		p.popMatrix();
+	}//end of drawPanel
+	
 	public RGBA getRandomColor(){
 		// generate a random color with random RGB
-		RGBA newColor = new RGBA(0, 0, 0, 255);
+		RGBA newColor = new RGBA((int)p.random(256), (int)p.random(256), (int)p.random(256), 255);
 		return newColor;
 	}
 	

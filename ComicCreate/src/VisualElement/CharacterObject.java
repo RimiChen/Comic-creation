@@ -46,9 +46,10 @@ public class CharacterObject implements VisualElement{
 		
 		p.fill(color.r, color.g, color.b, color.a);
 		Vector2D realpos = pos.transform2Real();
+		p.pushMatrix();
 		p.translate(realpos.x, realpos.y);
 		p.ellipse(0, 0, GlobalSettings.CHARA_SIZE/2, GlobalSettings.CHARA_SIZE/2);
-
+		p.popMatrix();
 		
 		
 		/*
