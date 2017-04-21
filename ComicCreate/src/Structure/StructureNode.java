@@ -162,13 +162,23 @@ public class StructureNode {
 	public void followUpdate(StructureNode previous){
 		//copy previous characters
 		characters = previous.characters;
-		ArrayList<PositionInPanel> allPos = new ArrayList<PositionInPanel>();
+		
+		ArrayList<PositionInPanel> allPos = new ArrayList<PositionInPanel>();	
+		int collisShift = 0;
+		
 		//update each character's new state
-		for (int i = 0; i < characters.size(); i++){
+		for (int i = 0; i < characters.size(); i++){		
+			 // reassign position after collision (even separate)
+			if (previous.category.equals("P") && previous.characters.get(i).currentState.stateString.get(0).equals("collis") ){
+				characters.get(i).pos.horizontal -= collisShift;
+				collisShift++;
+			}
+			
 			characters.get(i).updateState(category);		
 			allPos.add(characters.get(i).pos);
 		}
 		
+		//global check
 		if (category.equals("P")){
 			for (int i = 0; i < characters.size(); i++){
 				characters.get(i).globalChecking(allPos, i);		

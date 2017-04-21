@@ -90,7 +90,7 @@ public class MainProgram extends PApplet{
 		S.addStructure("E|I|P|R");
 		S.addStructure("E|I|L|P");
 		S.addStructure("E|I|L|P|R");
-		S.addStructure("I|P|I|P|I|P|R");
+		S.addStructure("I|P|I|P|R");
 		S.showAllStructure();
 		
 		//inital actionpool

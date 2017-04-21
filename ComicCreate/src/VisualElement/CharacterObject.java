@@ -19,7 +19,7 @@ public class CharacterObject implements VisualElement{
 	ActionPool pool;
 	RGBA color;
 	public PositionInPanel pos;
-	CharaState currentState;
+	public CharaState currentState;
 	/*
 	 * data structure
 	 */
@@ -67,7 +67,7 @@ public class CharacterObject implements VisualElement{
 	
 	public void globalChecking(ArrayList<PositionInPanel> allPos, int selfNumber){
 		for (int i = 0; i < allPos.size(); i++){
-			if ( i != selfNumber & pos.isOverlapping(allPos.get(i)) ){
+			if ( (i != selfNumber) && pos.isOverlapping(allPos.get(i)) ){
 				currentState.stateString.clear();
 				currentState.stateString.add("collis");
 				break;

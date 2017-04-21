@@ -16,8 +16,8 @@ public class ActionPool {
 		actionNet.put("walk"			, new String[]{"stand", 	"walk", "run",	"jumpUp", "-", 	 "roll", "-" 			});
 		actionNet.put("run"			, new String[]{"stand", 	"walk", "run",	"jumpUp", "-",	 "roll", "-" 			});
 		actionNet.put("jumpUp"	, new String[]{"-", 			"-", 		 "-",		"-", 	  		   "fall", "-", 	  	"-" 			});
-		actionNet.put("fall"			, new String[]{"stand",	 "-", 		 "-",		"-", 	  		   "-", 	 "-", 		"dizzy" 	});
-		actionNet.put("roll"			, new String[]{"stand", 	"walk", "-",		"-", 	   		   "-",  	 "-", 	  	"dizzy" 	});
+		actionNet.put("fall"			, new String[]{"stand",	 "-", 		 "-",		"-", 	  		   "-", 	 "roll", 	"dizzy" 	});
+		actionNet.put("roll"			, new String[]{"stand", 	"walk", "-",		"-", 	   		   "-",  	 "roll", 	"dizzy" 	});
 		actionNet.put("collis"		, new String[]{"-", 			"-", 		 "-",		"jumpUp", "fall", "-", 	  	"dizzy" 	});
 		actionNet.put("dizzy"		, new String[]{"stand", 	"walk", "-", 		"jumpUp", "-", 	 "roll", 	"dizzy"	});
 	}
@@ -28,7 +28,7 @@ public class ActionPool {
 		actionCategory.put("walk"	, "IL");
 		actionCategory.put("run"	, "IL");
 		actionCategory.put("jumpUp"	, "IL");
-		actionCategory.put("fall"	, "P");
+		actionCategory.put("fall"	, "PL");
 		actionCategory.put("roll"	, "PL");
 		actionCategory.put("collis"	, "P");
 		actionCategory.put("dizzy"	, "R");
