@@ -42,6 +42,7 @@ public class MainProgram extends PApplet{
 	public static GlobalSettings G;
 	public static StructureMap S;
 	public static List<StructureNode> currentStructure;
+	public static ActionPool A;
 		
 	//main setup run on first time===================================================================
 	public void setup(){
@@ -91,16 +92,20 @@ public class MainProgram extends PApplet{
 		S.addStructure("E|I|L|P|R");
 		S.addStructure("I|P|I|P|I|P|R");
 		S.showAllStructure();
+		
+		//inital actionpool
+		A = new ActionPool();
+		//set current structure to null
+		currentStructure = new ArrayList<StructureNode>();
 	}
 	
 	public void refresh(){
-		//set current structure to null
-		currentStructure = new ArrayList<StructureNode>();
-			
+
 		//clean structure and canvas
 		currentStructure.clear();
 		background(204);
 		
+		//initial and draw
 		currentStructure = createStructure();
 		if(currentStructure.size()>0){
 			int next = 0;

@@ -1,6 +1,8 @@
 package VisualElement;
 
 
+import java.util.Set;
+
 import BasicElement.GlobalSettings;
 import BasicElement.PositionInPanel;
 import BasicElement.RGBA;
@@ -16,11 +18,12 @@ public class CharacterObject implements VisualElement{
 	ActionPool pool;
 	RGBA color;
 	PositionInPanel pos;
+	CharaState currentState;
 	/*
 	 * data structure
 	 */
 	// the current state of this character, with position direction
-	CharaState currentState;
+	
 	
 	public CharacterObject(PApplet p, ActionPool pool, CharaState currentState, RGBA color, PositionInPanel pos){
 		this.p = p;
@@ -38,9 +41,16 @@ public class CharacterObject implements VisualElement{
 		String actionCategory = "";
 		
 		//match action state with current state
-		actionCategory = pool.findMatchedAction(currentState);
+		//actionCategory = pool.findMatchedAction(currentState);
 		return actionCategory;
 	}
+	public void updateState(String category){
+		String newAction = pool.nextAction(currentState.stateString.get(0), category);
+		currentState.stateString.clear();
+		currentState.stateString.add(newAction);
+		System.out.println(category + ": " + newAction);
+	}
+	
 	@Override
 	public void display() {
 		
@@ -49,6 +59,7 @@ public class CharacterObject implements VisualElement{
 		p.pushMatrix();
 		p.translate(realpos.x, realpos.y);
 		p.ellipse(0, 0, GlobalSettings.CHARA_SIZE/2, GlobalSettings.CHARA_SIZE/2);
+		p.text(currentState.stateString.get(0), -GlobalSettings.CHARA_SIZE/2, GlobalSettings.CHARA_SIZE/2);
 		p.popMatrix();
 		
 		
@@ -79,4 +90,5 @@ public class CharacterObject implements VisualElement{
 		
 	}//end of display
 
+	
 }

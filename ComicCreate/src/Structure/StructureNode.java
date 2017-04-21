@@ -11,7 +11,6 @@ import Data.ActionPool;
 import Data.CharaState;
 import VisualElement.CharacterObject;
 import processing.core.PApplet;
-
 /*
  * Each node is belongs to a narrative category.
  * A structure tree is composed by structure nodes, and the leaf node are panels.
@@ -149,16 +148,22 @@ public class StructureNode {
 		int numberOfCharacter = (int )(Math.random() * GlobalSettings.MAX_CHARACTER + 1);
 		for(int i =0; i <numberOfCharacter; i++){
 			RGBA tempColor = getRandomColor();
-			CharaState initialState = new CharaState();
+			String action = ActionPool.choseRandomAction(category);
+			CharaState initialState = new CharaState(action);
 			//PositionInPanel pos = new PositionInPanel(GlobalSettings.LEFT, GlobalSettings.LOW, GlobalSettings.FACE_RIGHT);
 			PositionInPanel pos = new PositionInPanel( i+1, GlobalSettings.LOW, GlobalSettings.FACE_RIGHT);
 			characters.add( new CharacterObject(p, GlobalSettings.AP, initialState, tempColor, pos));
 		}
 	}
-	public void followUpdate(StructureNode privous){
-		//copy privous
-		characters = privous.characters;
+	public void followUpdate(StructureNode previous){
+		//copy previous characters
+		characters = previous.characters;
+		//update each character's new state
+		for (int i = 0; i < characters.size(); i++){
+			characters.get(i).updateState(category);		
+		}
 		
+		/*
 		//maintain, add, sub
 		int n = (int)p.random(3);
 		switch(n){
@@ -167,7 +172,7 @@ public class StructureNode {
 		case 1:
 			if (characters.size()<GlobalSettings.MAX_CHARACTER){
 				RGBA tempColor = getRandomColor();
-				CharaState initialState = new CharaState();
+				CharaState initialState = new CharaState(category, ActionPool.choseRandomAction(category));
 				//PositionInPanel pos = new PositionInPanel(GlobalSettings.LEFT, GlobalSettings.LOW, GlobalSettings.FACE_RIGHT);
 				PositionInPanel pos = new PositionInPanel(GlobalSettings.LEFT , GlobalSettings.HIGH, GlobalSettings.FACE_RIGHT);
 				characters.add( new CharacterObject(p, GlobalSettings.AP, initialState, tempColor, pos));
@@ -181,6 +186,7 @@ public class StructureNode {
 		default:
 			System.out.println("out of bound:" + n);
 		}
+		*/
 	}
 	
 	
@@ -193,7 +199,7 @@ public class StructureNode {
 		p.line(GlobalSettings.BLOCK_WIDTH*2, 0, GlobalSettings.BLOCK_WIDTH*2, GlobalSettings.PANEL_HEIGHT);
 		p.line(0, GlobalSettings.BLOCK_HEIGHT, GlobalSettings.PANEL_WIDTH, GlobalSettings.BLOCK_HEIGHT);
 		p.textSize(14);
-		p.text(category + ", " + characters.size(), 10, GlobalSettings.PANEL_HEIGHT+15);
+		p.text(category, 10, GlobalSettings.PANEL_HEIGHT+15);
 		
 		//draw characters
 		for (int i = 0; i< characters.size(); i++){
