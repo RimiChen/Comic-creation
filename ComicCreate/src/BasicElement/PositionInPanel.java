@@ -20,4 +20,11 @@ public class PositionInPanel {
 		
 		return realPos;
 	}
+	public boolean isOverlapping(PositionInPanel pos){
+		if( (pos.horizontal == horizontal) && (pos.vertical == vertical)){
+			System.out.println("overlap in " + horizontal + ", " +vertical );
+			return true;
+		}
+		return false;
+	}
 }

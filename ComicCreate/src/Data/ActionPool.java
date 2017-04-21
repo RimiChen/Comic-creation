@@ -12,24 +12,24 @@ public class ActionPool {
 	static HashMap<String, String[]> actionNet = new HashMap<String, String[]>();
 	{
 		// put("name", new String[] 		  {"stand", "walk", "run",  "jumpUp", "fall", "trip", "dizzy"}
-		actionNet.put("stand"		, new String[]{"stand", "walk", "run",	"jumpUp", "-",	 "-", 	  	 "-" 			});
-		actionNet.put("walk"			, new String[]{"stand", 	"walk", "run",	"jumpUp", "-", 	 "trip", "-" 			});
-		actionNet.put("run"			, new String[]{"stand", 	"walk", "run",	"jumpUp", "-",	 "trip", "-" 			});
+		actionNet.put("stand"		, new String[]{"stand", "walk", "run",	"jumpUp", "-",	 "roll", "-" 			});
+		actionNet.put("walk"			, new String[]{"stand", 	"walk", "run",	"jumpUp", "-", 	 "roll", "-" 			});
+		actionNet.put("run"			, new String[]{"stand", 	"walk", "run",	"jumpUp", "-",	 "roll", "-" 			});
 		actionNet.put("jumpUp"	, new String[]{"-", 			"-", 		 "-",		"-", 	  		   "fall", "-", 	  	"-" 			});
-		actionNet.put("fall"			, new String[]{"stand",	 "-", 		 "-",		"-", 	  		   "-", 	  "-", 	"dizzy" 	});
-		actionNet.put("trip"			, new String[]{"-", 			"walk", "-",		"-", 	  		   "fall", "-", 	  	"dizzy" 	});
+		actionNet.put("fall"			, new String[]{"stand",	 "-", 		 "-",		"-", 	  		   "-", 	 "-", 		"dizzy" 	});
+		actionNet.put("roll"			, new String[]{"stand", 	"walk", "-",		"-", 	   		   "-",  	 "-", 	  	"dizzy" 	});
 		actionNet.put("collis"		, new String[]{"-", 			"-", 		 "-",		"jumpUp", "fall", "-", 	  	"dizzy" 	});
-		actionNet.put("dizzy"		, new String[]{"stand", 	"walk", "-", 		"jumpUp", "-", 	 "-", 	  	 "dizzy" 		});
+		actionNet.put("dizzy"		, new String[]{"stand", 	"walk", "-", 		"jumpUp", "-", 	 "roll", 	"dizzy"	});
 	}
 	
 	static HashMap<String, String> actionCategory = new HashMap<String, String>();
 	{
-		actionCategory.put("stand"	, "EI");
+		actionCategory.put("stand"	, "EIR");
 		actionCategory.put("walk"	, "IL");
 		actionCategory.put("run"	, "IL");
 		actionCategory.put("jumpUp"	, "IL");
-		actionCategory.put("fall"	, "PL");
-		actionCategory.put("trip"	, "L");
+		actionCategory.put("fall"	, "P");
+		actionCategory.put("roll"	, "PL");
 		actionCategory.put("collis"	, "P");
 		actionCategory.put("dizzy"	, "R");
 	}

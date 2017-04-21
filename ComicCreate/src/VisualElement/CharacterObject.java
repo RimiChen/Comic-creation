@@ -1,6 +1,7 @@
 package VisualElement;
 
 
+import java.util.ArrayList;
 import java.util.Set;
 
 import BasicElement.GlobalSettings;
@@ -17,7 +18,7 @@ public class CharacterObject implements VisualElement{
 	PApplet p;
 	ActionPool pool;
 	RGBA color;
-	PositionInPanel pos;
+	public PositionInPanel pos;
 	CharaState currentState;
 	/*
 	 * data structure
@@ -56,6 +57,21 @@ public class CharacterObject implements VisualElement{
 		}
 		else if (newAction.equals("fall")){
 			pos.vertical = GlobalSettings.LOW;
+		}
+		else if (newAction.equals("walk") || newAction.equals("run") || newAction.equals("roll")){
+			if (pos.horizontal != GlobalSettings.RIGHT){
+				pos.horizontal ++;
+			}
+		}
+	}
+	
+	public void globalChecking(ArrayList<PositionInPanel> allPos, int selfNumber){
+		for (int i = 0; i < allPos.size(); i++){
+			if ( i != selfNumber & pos.isOverlapping(allPos.get(i)) ){
+				currentState.stateString.clear();
+				currentState.stateString.add("collis");
+				break;
+			}
 		}
 	}
 	

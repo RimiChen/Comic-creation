@@ -150,17 +150,29 @@ public class StructureNode {
 			RGBA tempColor = getRandomColor();
 			String action = ActionPool.choseRandomAction(category);
 			CharaState initialState = new CharaState(action);
-			//PositionInPanel pos = new PositionInPanel(GlobalSettings.LEFT, GlobalSettings.LOW, GlobalSettings.FACE_RIGHT);
-			PositionInPanel pos = new PositionInPanel( i+1, GlobalSettings.LOW, GlobalSettings.FACE_RIGHT);
+			PositionInPanel pos;
+			if (action.equals("jumpUp")){
+				pos = new PositionInPanel( i+1, GlobalSettings.HIGH, GlobalSettings.FACE_RIGHT);
+			}else{
+				pos = new PositionInPanel( i+1, GlobalSettings.LOW, GlobalSettings.FACE_RIGHT);
+			}
 			characters.add( new CharacterObject(p, GlobalSettings.AP, initialState, tempColor, pos));
 		}
 	}
 	public void followUpdate(StructureNode previous){
 		//copy previous characters
 		characters = previous.characters;
+		ArrayList<PositionInPanel> allPos = new ArrayList<PositionInPanel>();
 		//update each character's new state
 		for (int i = 0; i < characters.size(); i++){
 			characters.get(i).updateState(category);		
+			allPos.add(characters.get(i).pos);
+		}
+		
+		if (category.equals("P")){
+			for (int i = 0; i < characters.size(); i++){
+				characters.get(i).globalChecking(allPos, i);		
+			}
 		}
 		
 		/*
