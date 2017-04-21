@@ -30,10 +30,11 @@ public class GlobalSettings {
 	public static final int PANEL_HEIGHT = BLOCK_HEIGHT*2;
 	
 	public static final int CHARA_SIZE = BLOCK_WIDTH;
+	public static final int MAX_CHARACTER = 3;
 	
 	public static final int EXPAND_FRACTION = 5;
 	
-	public static final int MAX_CHARACTER = 3;
+	public static final int PANEL_ONE_LINE = (int)(SCREEN_WIDTH/PANEL_WIDTH);
 	
 	//Global variables
 	public static ActionPool AP = new ActionPool();

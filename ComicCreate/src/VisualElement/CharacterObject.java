@@ -45,10 +45,18 @@ public class CharacterObject implements VisualElement{
 		return actionCategory;
 	}
 	public void updateState(String category){
-		String newAction = pool.nextAction(currentState.stateString.get(0), category);
+		String newAction = pool.nextAction(currentState.stateString.get(0), category);		
 		currentState.stateString.clear();
 		currentState.stateString.add(newAction);
 		System.out.println(category + ": " + newAction);
+		
+		//change position
+		if (newAction.equals("jumpUp")){
+			pos.vertical = GlobalSettings.HIGH;
+		}
+		else if (newAction.equals("fall")){
+			pos.vertical = GlobalSettings.LOW;
+		}
 	}
 	
 	@Override

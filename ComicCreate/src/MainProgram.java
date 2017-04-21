@@ -115,7 +115,7 @@ public class MainProgram extends PApplet{
 			translate(GlobalSettings.PANEL_WIDTH+10, 0);
 			for (int i = 1; i < currentStructure.size(); i++){
 				//current line full, draw next
-				if((i / 4) > next){
+				if((i / GlobalSettings.PANEL_ONE_LINE) > next){
 					popMatrix();
 					pushMatrix();
 					next++;
