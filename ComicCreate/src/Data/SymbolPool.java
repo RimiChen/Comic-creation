@@ -15,12 +15,14 @@ public class SymbolPool {
 	// save image in <symbol name, img>
 	Map<String, PImage> imagePool;
 	Map<String, Vector2D> imageShift;
+	Map<String, Float> imageSize; 
 	PImage tempImage;
 	
 	public SymbolPool(){
 		//this.P = P;
 		imagePool = new TreeMap<String, PImage>();
 		imageShift = new TreeMap<String, Vector2D>();
+		imageSize = new TreeMap<String, Float>();
 /*
 		actionCategory.put("stand"	, "EIR");
 		actionCategory.put("walk"	, "IL");
@@ -45,10 +47,11 @@ public class SymbolPool {
 			return resultImage;
 		}
 	}
-	public void putImage(String action, PImage image, float shift_x, float shift_y){
+	public void putImage(String action, PImage image, float shift_x, float shift_y, float size){
 		//System.out.println("in SP, "+image);
 		imagePool.put(action,  image);
 		imageShift.put(action, new Vector2D(shift_x, shift_y));
+		imageSize.put(action, size);
 		//System.out.println("in SP, "+imagePool.size());
 		//showAllImage();
 	}
@@ -66,4 +69,14 @@ public class SymbolPool {
 			return shift;
 		}		
 	}
+	public float getSize(String action){
+		Float symbolSize = imageSize.get(action);
+		if(symbolSize == null){
+			symbolSize = 1.0f;
+			return 1.0f;
+		}
+		else{
+			return symbolSize;
+		}		
+	}	
 }

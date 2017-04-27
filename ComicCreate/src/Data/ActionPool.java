@@ -12,26 +12,56 @@ public class ActionPool {
 	static HashMap<String, String[]> actionNet = new HashMap<String, String[]>();
 	{
 		// put("name", new String[] 		  {"stand", "walk", "run",  "jumpUp", "fall", "trip", "dizzy"}
-		actionNet.put("stand"		, new String[]{"stand", "walk", "run",	"jumpUp", "-",	 "roll", "-" 			});
-		actionNet.put("walk"			, new String[]{"stand", 	"walk", "run",	"jumpUp", "-", 	 "roll", "-" 			});
-		actionNet.put("run"			, new String[]{"stand", 	"walk", "run",	"jumpUp", "-",	 "roll", "-" 			});
-		actionNet.put("jumpUp"	, new String[]{"-", 			"-", 		 "-",		"-", 	  		   "fall", "-", 	  	"-" 			});
-		actionNet.put("fall"			, new String[]{"stand",	 "-", 		 "-",		"-", 	  		   "-", 	 "roll", 	"dizzy" 	});
-		actionNet.put("roll"			, new String[]{"stand", 	"walk", "-",		"-", 	   		   "-",  	 "roll", 	"dizzy" 	});
-		actionNet.put("collis"		, new String[]{"-", 			"-", 		 "-",		"jumpUp", "fall", "-", 	  	"dizzy" 	});
-		actionNet.put("dizzy"		, new String[]{"stand", 	"walk", "-", 		"jumpUp", "-", 	 "roll", 	"dizzy"	});
+		// put("name", new String[] 		  {"stand", "walk", "run",  "jumpUp", "fall","roll", "dizzy"}
+		actionNet.put("stand"	, new String[]{"stand", "walk", "run",	"jumpUp", "roll", "sit",	"think", "eat", "drink"	});
+		actionNet.put("walk"	, new String[]{"stand", "walk", "run",	"jumpUp",  "roll", "think"});
+		actionNet.put("run"		, new String[]{"stand", "walk", "run",	"jumpUp", "roll"});
+		actionNet.put("jumpUp"	, new String[]{"fall"});
+		actionNet.put("fall"	, new String[]{"stand",	"roll", "dizzy" });
+		actionNet.put("roll"	, new String[]{"stand", "walk", "roll", "dizzy" });
+		actionNet.put("collis"	, new String[]{"jumpUp", "fall","dizzy", "angry", "sad", "happy" });
+		actionNet.put("dizzy"	, new String[]{"stand", "sit", "happy", "sad", "angry" });
+		
+		actionNet.put("sit"		, new String[]{"stand", "think", "eat", "drink"});
+		
+		actionNet.put("think"	, new String[]{"stand", "eat", "drink" });  // == wake
+		actionNet.put("eat"		, new String[]{"drink", "shock", "spit","happy", "sad"	});
+		actionNet.put("drink"	, new String[]{"eat"  , "shock", "spit","happy", "sad"	});
+		actionNet.put("spit"	, new String[]{ "stand", "sit", "sad", "drink", "angry"});
+		actionNet.put("happy"	, new String[]{"stand", "sit"});
+		actionNet.put("sad"		, new String[]{"stand", "sit"});
+		
+		actionNet.put("fly"		, new String[]{"fly", "fall"});
+		actionNet.put("sleep"	, new String[]{"think", "shock"});
+		actionNet.put("shock"	, new String[]{"sad", "angry", "happy"});// == choke
+		actionNet.put("angry"	, new String[]{"stand", "sit"});
+	
 	}
 	
 	static HashMap<String, String> actionCategory = new HashMap<String, String>();
 	{
-		actionCategory.put("stand"	, "EIR");
+		actionCategory.put("stand"	, "EILR");
 		actionCategory.put("walk"	, "IL");
 		actionCategory.put("run"	, "IL");
 		actionCategory.put("jumpUp"	, "IL");
-		actionCategory.put("fall"	, "PL");
+		actionCategory.put("fall"	, "IPLR");
 		actionCategory.put("roll"	, "PL");
 		actionCategory.put("collis"	, "P");
 		actionCategory.put("dizzy"	, "R");
+		
+		actionCategory.put("sit"	, "EILR");
+		
+		actionCategory.put("think"	, "IL");
+		actionCategory.put("eat"	, "IP");
+		actionCategory.put("drink"	, "IP");
+		actionCategory.put("spit"	, "PR");
+		actionCategory.put("happy"	, "R");
+		actionCategory.put("sad"	, "R");
+		
+		actionCategory.put("fly"	, "LP");
+		actionCategory.put("sleep"	, "ILR");
+		actionCategory.put("shock"	, "P");
+		actionCategory.put("angry"	, "PR");
 	}
 	
 	static void ActionPool(){	

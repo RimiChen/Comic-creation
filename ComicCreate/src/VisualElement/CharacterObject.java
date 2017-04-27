@@ -52,7 +52,7 @@ public class CharacterObject implements VisualElement{
 		System.out.println(category + ": " + newAction);
 		
 		//change position
-		if (newAction.equals("jumpUp")){
+		if (newAction.equals("jumpUp") || newAction.equals("fly") ){
 			pos.vertical = GlobalSettings.HIGH;
 		}
 		else if (newAction.equals("fall")){
@@ -74,7 +74,20 @@ public class CharacterObject implements VisualElement{
 			}
 		}
 	}
-	
+	public int positionExchange(ArrayList<PositionInPanel> allPos, int selfNumber){
+		for (int i = 0; i < allPos.size(); i++){
+			if ( (i != selfNumber) && pos.isOverlapping(allPos.get(i)) ){
+				//currentState.stateString.clear();
+				//currentState.stateString.add("collis");
+				//PositionInPanel tempPos = pos;
+				//pos = allPos.get(i);
+				
+				return i;
+				//break;
+			}
+		}
+		return 0;
+	}	
 	@Override
 	public void display() {
 		
@@ -89,7 +102,8 @@ public class CharacterObject implements VisualElement{
 			if(GlobalSettings.SP.getImage(currentState.stateString.get(0)) != null){
 				//p.text("Show Symbol", 0, 0);
 				Vector2D symbolShift = GlobalSettings.SP.getShift(currentState.stateString.get(0));
-				p.image(GlobalSettings.SP.getImage(currentState.stateString.get(0)), -symbolShift.x, -symbolShift.y, GlobalSettings.BLOCK_WIDTH, GlobalSettings.BLOCK_HEIGHT);
+				float symbolSize = GlobalSettings.SP.getSize(currentState.stateString.get(0));
+				p.image(GlobalSettings.SP.getImage(currentState.stateString.get(0)), symbolShift.x, symbolShift.y, GlobalSettings.BLOCK_WIDTH*symbolSize, GlobalSettings.BLOCK_HEIGHT*symbolSize);
 			}
 		}
 		p.text(currentState.stateString.get(0), -GlobalSettings.CHARA_SIZE/2, GlobalSettings.CHARA_SIZE/2);

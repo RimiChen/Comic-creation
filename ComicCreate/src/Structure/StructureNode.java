@@ -184,7 +184,20 @@ public class StructureNode {
 				characters.get(i).globalChecking(allPos, i);		
 			}
 		}
-		
+/*		
+		else{
+			for (int i = 0; i < characters.size(); i++){
+				int exchangeChara = 0;
+				exchangeChara = characters.get(i).positionExchange(allPos, i);
+				if(exchangeChara != 0){
+					characters.get(i).pos.horizontal = characters.get(i).pos.horizontal +1;
+					characters.get(exchangeChara).pos.horizontal =  characters.get(exchangeChara).pos.horizontal -1;
+				}
+			}
+			
+			
+		}
+*/		
 		/*
 		//maintain, add, sub
 		int n = (int)p.random(3);
@@ -217,9 +230,9 @@ public class StructureNode {
 		p.pushMatrix();
 		p.fill(255);
 		p.rect(0,0,GlobalSettings.PANEL_WIDTH, GlobalSettings.PANEL_HEIGHT);
-		p.line(GlobalSettings.BLOCK_WIDTH, 0, GlobalSettings.BLOCK_WIDTH, GlobalSettings.PANEL_HEIGHT);
-		p.line(GlobalSettings.BLOCK_WIDTH*2, 0, GlobalSettings.BLOCK_WIDTH*2, GlobalSettings.PANEL_HEIGHT);
-		p.line(0, GlobalSettings.BLOCK_HEIGHT, GlobalSettings.PANEL_WIDTH, GlobalSettings.BLOCK_HEIGHT);
+		//p.line(GlobalSettings.BLOCK_WIDTH, 0, GlobalSettings.BLOCK_WIDTH, GlobalSettings.PANEL_HEIGHT);
+		//p.line(GlobalSettings.BLOCK_WIDTH*2, 0, GlobalSettings.BLOCK_WIDTH*2, GlobalSettings.PANEL_HEIGHT);
+		//p.line(0, GlobalSettings.BLOCK_HEIGHT, GlobalSettings.PANEL_WIDTH, GlobalSettings.BLOCK_HEIGHT);
 		p.textSize(14);
 		p.text(category, 10, GlobalSettings.PANEL_HEIGHT+15);
 		

@@ -85,7 +85,7 @@ public class MainProgram extends PApplet{
 		
 		//Visual narrative structure
 		S = new StructureMap();
-		S.addStructure("P|R");
+		//S.addStructure("P|R");
 		S.addStructure("I|P|R");
 		S.addStructure("I|L|P|R");
 		S.addStructure("E|I|P|R");
@@ -99,8 +99,43 @@ public class MainProgram extends PApplet{
 		//set current structure to null
 		currentStructure = new ArrayList<StructureNode>();
 		PImage image;
-		image= loadImage("Fall.png");
-		GlobalSettings.SP.putImage("fall", image, 10.0f, 20.0f);
+		image= loadImage("./symbol/angry.png");
+		GlobalSettings.SP.putImage("angry", image, -5.0f, -15.0f, 0.5f);
+		image= loadImage("./symbol/drink.png");
+		GlobalSettings.SP.putImage("drink", image, -5.0f, -20.0f, 0.65f);
+		image= loadImage("./symbol/eat.png");
+		GlobalSettings.SP.putImage("eat", image, -10.0f, -30.0f, 0.8f);
+		image= loadImage("./symbol/fall.png");
+		GlobalSettings.SP.putImage("fall", image, -20.0f, -25.0f, 0.8f);
+		image= loadImage("./symbol/fly.png");
+		GlobalSettings.SP.putImage("fly", image, -20.0f, -27.0f, 0.6f);
+		image= loadImage("./symbol/happy.png");
+		GlobalSettings.SP.putImage("happy", image, -10.0f, -7.0f, 0.5f);
+		image= loadImage("./symbol/jump.png");
+		GlobalSettings.SP.putImage("jumpUp", image, -20.0f, 10.0f, 1.0f);
+		image= loadImage("./symbol/roll.png");
+		GlobalSettings.SP.putImage("roll", image, -30.0f, -15.0f, 0.5f);
+		image= loadImage("./symbol/sad.png");
+		GlobalSettings.SP.putImage("sad", image, -10.0f, -7.0f, 0.5f);
+		image= loadImage("./symbol/shock.png");
+		GlobalSettings.SP.putImage("shock", image, -15.0f, -32.0f, 0.8f);
+		image= loadImage("./symbol/sit.png");
+		GlobalSettings.SP.putImage("sit", image, -12.0f, -22.0f, 0.8f);
+		image= loadImage("./symbol/spit.png");
+		GlobalSettings.SP.putImage("spit", image, -1.0f, -20.0f, 0.8f);
+		image= loadImage("./symbol/think.png");
+		GlobalSettings.SP.putImage("think", image, -10.0f, -57.0f, 0.8f);
+		image= loadImage("./symbol/walk.png");
+		GlobalSettings.SP.putImage("walk", image, -30.0f, -27.0f, 0.8f);
+		image= loadImage("./symbol/collis.png");
+		GlobalSettings.SP.putImage("collis", image, -10.0f, -25.0f, 0.8f);		
+		image= loadImage("./symbol/dizzy.png");
+		GlobalSettings.SP.putImage("dizzy", image, -15.0f, -27.0f, 0.6f);
+		image= loadImage("./symbol/run.png");
+		GlobalSettings.SP.putImage("run", image, -40.0f, -27.0f, 0.8f);
+		image= loadImage("./symbol/sleep.png");
+		GlobalSettings.SP.putImage("sleep", image, -10.0f, -45.0f, 0.6f);
+
 		//System.out.println(GlobalSettings.SP.getImage("fall"));
 	}
 	
