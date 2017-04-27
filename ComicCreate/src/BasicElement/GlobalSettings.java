@@ -1,11 +1,19 @@
 package BasicElement;
 
 import Data.ActionPool;
+import Data.SymbolPool;
+import processing.core.PApplet;
 
 public class GlobalSettings {
 	/*
 	 * constants
 	 */
+	
+	static PApplet P;
+	
+	public GlobalSettings(PApplet P){
+		this.P = P;
+	}
 	//block representation
 	public static final int LEFT = 1;
 	public static final int MIDDLE = 2;
@@ -38,4 +46,6 @@ public class GlobalSettings {
 	
 	//Global variables
 	public static ActionPool AP = new ActionPool();
+
+	public static SymbolPool SP = new SymbolPool(P);
 }

@@ -77,10 +77,10 @@ public class MainProgram extends PApplet{
 	}
 	
 	//Initialize settings===========================================================================
-	public static void initialize(){
+	public void initialize(){
 		
 		//global setting
-		G = new GlobalSettings();
+		G = new GlobalSettings(this);
 		
 		//Visual narrative structure
 		S = new StructureMap();
