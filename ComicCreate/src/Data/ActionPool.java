@@ -6,6 +6,8 @@ import java.util.Random;
 import java.util.Set;
 import java.util.Vector;
 
+import BasicElement.GlobalSettings;
+
 public class ActionPool {
 	Vector actionSet;
 	
@@ -80,20 +82,29 @@ public class ActionPool {
 	}
 	
 	public String nextAction(String previousAction, String category){
+		if (!GlobalSettings.RELATION_ALLOW ){
+			Set<String> candidate = actionCategory.keySet();
+			String randomPick = pickFromSet(candidate);
+			return randomPick;
+		}
+		
 	    //find candidate action
 	    Set<String> candidate = getAvailableActions(previousAction);
 	    //Picking a random element from a set
 	    String randomPick = pickFromSet(candidate);
 	    //check is picked fit it's category  
-	    while(actionCategory.get(randomPick).contains(category)==false && candidate.size()>=2){
-	    	candidate.remove(randomPick);
-	    	randomPick = pickFromSet(candidate);
+		if(GlobalSettings.STRUCTURE_ALLOW == true){
+	    	while(actionCategory.get(randomPick).contains(category)==false && candidate.size()>=2){
+		    	candidate.remove(randomPick);
+		    	randomPick = pickFromSet(candidate);
+		    }
+		    //prevent actionNet error
+		    if(candidate.size() == 1 && actionCategory.get(randomPick).contains(category)==false){
+		    	System.out.println("net fail,  \"" + previousAction + "\" candidate can't find match category to " + category);
+		    	randomPick = choseRandomAction(category);
+		    }
 	    }
-	    //prevent actionNet error
-	    if(candidate.size() == 1 && actionCategory.get(randomPick).contains(category)==false){
-	    	System.out.println("net fail,  \"" + previousAction + "\" candidate can't find match category to " + category);
-	    	randomPick = choseRandomAction(category);
-	    }
+
 	    return randomPick;      
 	  }
 	
