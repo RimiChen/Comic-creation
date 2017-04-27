@@ -44,8 +44,10 @@ public class GlobalSettings {
 	
 	public static final int PANEL_ONE_LINE = (int)(SCREEN_WIDTH/PANEL_WIDTH);
 	
+	public static final boolean SYMBOL_ALLOW = true;
+	
 	//Global variables
 	public static ActionPool AP = new ActionPool();
 
-	public static SymbolPool SP = new SymbolPool(P);
+	public static SymbolPool SP = new SymbolPool();
 }

@@ -11,6 +11,7 @@ import Structure.StructureMap;
 import Structure.StructureNode;
 import VisualElement.CharacterObject;
 import processing.core.PApplet;
+import processing.core.PImage;
 
 /*
  * This project was created for CSC 591 Visual Narrative project
@@ -97,6 +98,10 @@ public class MainProgram extends PApplet{
 		A = new ActionPool();
 		//set current structure to null
 		currentStructure = new ArrayList<StructureNode>();
+		PImage image;
+		image= loadImage("Fall.png");
+		GlobalSettings.SP.putImage("fall", image, 10.0f, 20.0f);
+		//System.out.println(GlobalSettings.SP.getImage("fall"));
 	}
 	
 	public void refresh(){

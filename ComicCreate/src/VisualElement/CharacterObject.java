@@ -83,6 +83,15 @@ public class CharacterObject implements VisualElement{
 		p.pushMatrix();
 		p.translate(realpos.x, realpos.y);
 		p.ellipse(0, 0, GlobalSettings.CHARA_SIZE/2, GlobalSettings.CHARA_SIZE/2);
+		// load symbol if symbol allowed
+		if(GlobalSettings.SYMBOL_ALLOW == true){
+			//System.out.println(GlobalSettings.SP.getImage(currentState.stateString.get(0)));
+			if(GlobalSettings.SP.getImage(currentState.stateString.get(0)) != null){
+				//p.text("Show Symbol", 0, 0);
+				Vector2D symbolShift = GlobalSettings.SP.getShift(currentState.stateString.get(0));
+				p.image(GlobalSettings.SP.getImage(currentState.stateString.get(0)), -symbolShift.x, -symbolShift.y, GlobalSettings.BLOCK_WIDTH, GlobalSettings.BLOCK_HEIGHT);
+			}
+		}
 		p.text(currentState.stateString.get(0), -GlobalSettings.CHARA_SIZE/2, GlobalSettings.CHARA_SIZE/2);
 		p.popMatrix();
 		
