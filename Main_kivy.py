@@ -20,6 +20,7 @@ from random import randrange, randint
 # processing program here
 from typing import Sequence
 from Parameters import *
+from Parameter_2 import *
 from Panel import *
 from Sequence import *
 from Layer import *
@@ -27,6 +28,7 @@ from Grammar import *
 from Actions import *
 from Transitions import *
 from Textbox import *
+from StoryContent import *
 from EyePath import *
 from Sentiment import *
 from Scene import *
@@ -41,10 +43,11 @@ DEFAULT_LENGTH = 5
 IS_PAGE = False
 DEFAULLT_WINDOW_HEIGHT = 800
 DEFAULLT_WINDOW_WIDTH = 1200
+DEFAULT_MENU_WIDTH = 300
 PANEL_VERTIVAL_MAX = 2
 PANEL_HORIZONTAL_MAX = 4
 EQUAL_PANEL_HEIGHT = math.floor(DEFAULLT_WINDOW_HEIGHT / (PANEL_VERTIVAL_MAX+1))
-EQUAL_PANEL_WIDTH = math.floor(DEFAULLT_WINDOW_WIDTH / (PANEL_HORIZONTAL_MAX+1))
+EQUAL_PANEL_WIDTH = math.floor((DEFAULLT_WINDOW_WIDTH) / (PANEL_HORIZONTAL_MAX+1))
 
 DEFAULT_COMPOSITION_ALPHA = 0
 
@@ -53,7 +56,7 @@ global window
 Config.set('graphics', 'resizable', '0')
   
 # fix the width of the window 
-Config.set('graphics', 'width', DEFAULLT_WINDOW_WIDTH)
+Config.set('graphics', 'width', DEFAULLT_WINDOW_WIDTH + DEFAULT_MENU_WIDTH)
   
 # fix the height of the window 
 Config.set('graphics', 'height', DEFAULLT_WINDOW_HEIGHT)
@@ -78,8 +81,6 @@ class Generator:
     def executeTaskLayers(self, sequence):
         for task in self.taskQueue:
             sequence = task.apply(sequence)
-
-        # sequence.printSequence()
 
         return sequence
 
@@ -206,6 +207,50 @@ def coord_modify(orgin,  anchor_point, x, y, parent_width, parent_height, size_w
 
 
     return [new_target_x, new_target_y]
+
+class InnerLayout(FloatLayout):
+    def __init__(self, **kwargs):
+        # make sure we aren't overriding any important functionality
+        super(InnerLayout, self).__init__(**kwargs)
+        self.size = kwargs["size"]
+        self.pos = kwargs["pos"]
+
+        # background
+        with self.canvas.before:
+            Color(0.5, 0.5, 0.5, 1)  # green; colors range from 0-1 instead of 0-255
+            self.rect = Rectangle(size=self.size, pos=self.pos)
+
+        self.bind(size=self._update_rect, pos=self._update_rect)
+
+    def setColor(self, color):
+        self.color = color
+
+    def _update_rect(self, instance, value):
+        self.rect.pos = instance.pos
+        self.rect.size = instance.size
+
+class InterfaceLayout(FloatLayout):
+    def __init__(self, **kwargs):
+        # make sure we aren't overriding any important functionality
+        super(InterfaceLayout, self).__init__(**kwargs)
+        self.size = kwargs["size"]
+        self.pos = kwargs["pos"]
+
+        # background
+        with self.canvas.before:
+            Color(1, 1, 1, 1)  # green; colors range from 0-1 instead of 0-255
+            self.rect = Rectangle(size=self.size, pos=self.pos)
+
+        self.bind(size=self._update_rect, pos=self._update_rect)
+
+    def setColor(self, color):
+        self.color = color
+
+    def _update_rect(self, instance, value):
+        self.rect.pos = instance.pos
+        self.rect.size = instance.size
+
+
 class PanelLayout(FloatLayout):
     def __init__(self, **kwargs):
         # make sure we aren't overriding any important functionality
@@ -261,7 +306,25 @@ class MainApp(App):
         self.root = root = RootWidget()
         root.bind(size=self._update_rect, pos=self._update_rect)
 
+        intereface_size_w = DEFAULLT_WINDOW_WIDTH + DEFAULT_MENU_WIDTH
+        interface_size_h = DEFAULLT_WINDOW_HEIGHT
+        interface_panel = InterfaceLayout(size=(intereface_size_w, interface_size_h), pos = (0, DEFAULLT_WINDOW_HEIGHT - interface_size_h), size_hint=(None, None))
+        root.add_widget(interface_panel)
+
         
+        inner_back_w = DEFAULLT_WINDOW_WIDTH 
+        inner_back_h = DEFAULLT_WINDOW_HEIGHT
+        inner_back = InnerLayout(size=(inner_back_w , inner_back_h ), pos = (0, DEFAULLT_WINDOW_HEIGHT - inner_back_h ), size_hint=(None, None))
+        interface_panel.add_widget(inner_back)
+
+
+
+        # reload_shift = 30
+        reload_w = 200
+        reload_h = 30
+        reload_button = Button(text ='Generate', size =(reload_w, reload_h), pos = (inner_back_w + (DEFAULT_MENU_WIDTH-(reload_w))/2, 50), background_normal ="", background_color =(156/255, 207/255, 83/255, 1), size_hint=(None, None))
+        interface_panel.add_widget(reload_button)
+
 
         panelFrameList = {}
         panelIndex = 0
@@ -283,7 +346,7 @@ class MainApp(App):
             # reference_y = 200
             new_panel_layout = PanelLayout(size=(EQUAL_PANEL_WIDTH,EQUAL_PANEL_HEIGHT), pos = (reference_x, reference_y), size_hint=(None, None))
             panelFrameList[str(panelIndex)] = new_panel_layout
-            root.add_widget(new_panel_layout)
+            inner_back.add_widget(new_panel_layout)
 
 
             # print("-----Scene: ", panel.scene)
@@ -578,7 +641,8 @@ if __name__ == "__main__":
     # initial the tool and interface
     # generator = Generator()
     # def __init__(self, window_h, window_w, panel_h, panel_w, defaultLength, isPage):    
-    parameter = Parameters(DEFAULLT_WINDOW_HEIGHT, DEFAULLT_WINDOW_WIDTH, EQUAL_PANEL_HEIGHT, EQUAL_PANEL_WIDTH, DEFAULT_LENGTH, IS_PAGE, PANEL_HORIZONTAL_MAX, PANEL_VERTIVAL_MAX, DEFAULT_LENGTH)
+    # parameter = Parameters(DEFAULLT_WINDOW_HEIGHT, DEFAULLT_WINDOW_WIDTH, EQUAL_PANEL_HEIGHT, EQUAL_PANEL_WIDTH, DEFAULT_LENGTH, IS_PAGE, PANEL_HORIZONTAL_MAX, PANEL_VERTIVAL_MAX, DEFAULT_LENGTH)
+    parameter = Parameters2(DEFAULLT_WINDOW_HEIGHT, DEFAULLT_WINDOW_WIDTH, EQUAL_PANEL_HEIGHT, EQUAL_PANEL_WIDTH, DEFAULT_LENGTH, IS_PAGE, PANEL_HORIZONTAL_MAX, PANEL_VERTIVAL_MAX, DEFAULT_LENGTH)
 
 # from Grammar import *
 # from Actions import *
@@ -604,7 +668,8 @@ if __name__ == "__main__":
     textboxLayer = Textbox("Textboxes", parameter)
     generator.addTaskLayer(textboxLayer)       
 
-
+    storyLayer = StoryContent("StoryContent", parameter)
+    generator.addTaskLayer(storyLayer)   
 
     # eyePathLayer = EyePath("EyePath", parameter)
     # generator.addTaskLayer(eyePathLayer)       

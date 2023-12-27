@@ -6,7 +6,7 @@ from ScenePool import *
 from ImageObj import *
 from ImagePool import *
 
-class Parameters:
+class Parameters2:
     def __init__(self, window_h, window_w, panel_h, panel_w, defaultLength, isPage, horizontal_max, vertical_max, default_panel_number):
         # self.taskQueue = queue.Queue()
         self.taskQueue = []
